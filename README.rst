@@ -2,4 +2,4 @@
 MFO-Algorithm
 ==============
 
-Moth Flame Optimization Algorithm
+Moth-Flame Optimization Algorithm
