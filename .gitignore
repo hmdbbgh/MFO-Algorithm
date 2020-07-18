@@ -1,0 +1,4 @@
+# Extra Folders
+.venv/
+.vscode/
+__pycache__/
