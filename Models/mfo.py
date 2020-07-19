@@ -2,6 +2,8 @@ import sys
 
 import numpy as np
 
+from fitnessfunctions import FitnessFunctions
+
 
 class MFO:
 
@@ -21,6 +23,10 @@ class MFO:
         self.is_valid()
 
         self.get_fitnessfunction()
+        
+        self.determine_the_initial_position_of_the_moths()
+
+        self.determine_the_initial_value_of_the_moths()
 
 
     def is_valid(self):
@@ -44,13 +50,17 @@ class MFO:
 
     def get_fitnessfunction(self):
 
-        # get dimension and upper bound and lower bound
+        FitnessFunctions_object = FitnessFunctions()
 
-        self.dimension = 10
+        fitnessfunction_args, self.fitnessfunction = FitnessFunctions_object.get(self.fitnessfunction_name)
 
-        self.lower_bound = -5.12
+        self.dimension = fitnessfunction_args['dim']
 
-        self.upper_bound = 5.12
+        self.lower_bound = fitnessfunction_args['lb']
+
+        self.upper_bound = fitnessfunction_args['ub']
+
+        print(self.fitnessfunction(np.array([1,2,4,4])))
 
         if not isinstance(self.lower_bound, list):
 
@@ -58,7 +68,9 @@ class MFO:
 
         if not isinstance(self.upper_bound, list):
 
-            self.upper_bound = [self.upper_bound for i in range(self.dimension)] 
+            self.upper_bound = [self.upper_bound for i in range(self.dimension)]
+
+        print(self.dimension, self.lower_bound, self.upper_bound)
 
     
     def determine_the_initial_position_of_the_moths(self):
@@ -73,8 +85,6 @@ class MFO:
                                      (self.upper_bound[i] - self.lower_bound[i]) + self.lower_bound[i]
 
         print(self.position_of_moths)
-
-        self.determine_the_initial_value_of_the_moths()
 
     
     def determine_the_initial_value_of_the_moths(self):
@@ -100,21 +110,21 @@ class MFO:
 
     def evaluate_the_moths(self):
 
-        for i in range(self.number_of_moths): self.fitness_of_moths[i] = self.sphere(self.position_of_moths[i,:])
+        for i in range(self.number_of_moths): self.fitness_of_moths[i] = self.fitnessfunction(self.position_of_moths[i,:])
 
         print(self.fitness_of_moths)
 
     
-    def sphere(self, x):
-        
-        return np.sum(x**2)
+    
         
 
 
-a = MFO(10,10,'a')
+a = MFO(10,10,'sphere')
 
-a.determine_the_initial_position_of_the_moths()
+# a.determine_the_initial_position_of_the_moths()
 
-a.determine_the_number_of_flames(1)
+# a.determine_the_number_of_flames(1)
 
-a.evaluate_the_moths()
+# a.evaluate_the_moths()
+# a.get_fitnessfunction()
+
