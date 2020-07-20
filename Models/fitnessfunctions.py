@@ -41,7 +41,7 @@ class FitnessFunctions:
 
         else:
 
-            sys.exit('Ackley N. 2 function is only defined on a 2D space.')
+            sys.exit('The Ackley N. 2 function is only defined on a 2D space.')
 
     
     def ackleyn2_args(self):
@@ -55,7 +55,39 @@ class FitnessFunctions:
         }
         
         return result
-            
+
+    
+    def bohachevskyn1(self, value):
+
+        if len(value) == 2:
+
+            scores = (
+                (value[0] ** 2) +\
+                    (2 * (value[1] ** 2)) -\
+                    (0.3 * np.cos(3 *\
+                    np.pi* value[0])) -\
+                    (0.4 * np.cos(4 * np.pi * value[1])) + (0.7)
+            )
+        
+            return scores
+
+        else:
+
+            sys.exit('The Bohachevsky N. 1 function is only defined on a 2D space.')
+
+
+    def bohachevskyn1_args(self):
+
+        dimension, lower_bound, upper_bound = 2, -100, 100
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
 
     def sphere(self, value):
         
