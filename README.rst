@@ -60,6 +60,7 @@ Example
 ~~~~~~~
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.1.PNG
+    :align: center
 
 Pic. 1 shows a conceptual model of transverse orientation. Since the moon is far away from the moth,
 this mechanism guarantees flying in straight line. 
@@ -72,7 +73,8 @@ In fact, moths are tricked by artificial lights and show such behaviours. This i
 the transverse orientation, in which it is only helpful for moving in straight line when the light source is very far.
 When moths see a human-made artificial light, they try to maintain a similar angle with the light to fly in straight line.
 
-    Pic. 2
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.2.PNG
+    :align: center
 
 Since such a light is extremely close compared to the moon, however, maintaining a similar angle to the light source causes a
 useless or deadly spiral fly path for moths. A conceptual model of this behaviour is illustrated in Pic. 2.
@@ -90,7 +92,8 @@ Since the MFO algorithm is a population-based algorithm, the set of moths is
 represented in a matrix where n is the number of moths and d is the number of variables (dimension). For all the moths,
 we also assume that there is an array for storing the corresponding fitness values where again n is the number of moths.
 
-    Pic. 3
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.3.PNG
+    :align: center
 
 Note that moths and flames are both solutions. The difference between them is their approach and update methods in each iteration.
 Moths are the actual search agents that move in the search space, while flames are moth's best calculated postion by far.
@@ -105,7 +108,8 @@ This method is applied as default in which 'ub' is the upper bound and 'lb' is t
 Therefore for 'n' in dimension 'd' will be able to generate ininial solutions. We can calculate the fitness for each
 solution after initialization, thus the fitness function value of matrix 'M' will be 'OM'.
 
-    Pic. 4
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.4.PNG
+    :align: center
 
 Algorithm iterations
 ~~~~~~~~~~~~~~~~~~~~
@@ -127,26 +131,30 @@ here subject to the following conditions:
 
 Considering these points, a logarithmic spiral is defined for the MFO algorithm as follows:
     
-    Pic. 5
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.5.PNG
+    :align: center
 
 where 'D(i)' indicates the distance of the 'i-th' moth for the 'j-th' flame, 'b' is a constant for defining the shape of
 the logarithmic spiral, and 't' is a random number in [1, 1].
 
-    Pic. 6
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.6.PNG
+    :align: center
 
 Equation shown in Pic. 5 is where the spiral flying path of moths is simulated. As may be seen in this equation, the next position of a moth is
 defined with respect to a flame. The t parameter in the spiral equation defines how much the next position of the moth should be
 close to the flame ('t' = '-1' is the closest position to the flame, while 't' = '1' shows the farthest). Therefore, a hyper ellipse
 can be assumed around the flame in all directions and the next position of the moth would be within this space.
 
-    Pic. 7
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.7.PNG
+    :align: center
 
 The spiral movement is the main component of the proposed method because it dictates how the moths update their positions around flames.
 The spiral equation allows a moth to fly "around" a flame and not necessarily in the space between them.
 Therefore, the exploration and exploitation of the search space can be guaranteed.
 The logarithmic spiral, space around the flame, and the position considering different t on the curve are illustrated in Pic. 7.
 
-    Pic. 8
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.8.PNG
+    :align: center
 
 Pic. 8 shows a conceptual model of position updating of a moth around a flame. Note that the vertical axis shows only one dimension
 (1 variable/parameter of a given problem), but the method can be apllied for changing all the variables of the problem.
