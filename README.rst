@@ -59,7 +59,7 @@ fixed angle with respect to the moon, a very effective mechanism for travelling 
 Example
 ~~~~~~~
 
-    Pic. 1
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.1.png
 
 Pic. 1 shows a conceptual model of transverse orientation. Since the moon is far away from the moth,
 this mechanism guarantees flying in straight line. 
