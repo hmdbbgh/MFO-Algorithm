@@ -119,10 +119,11 @@ Logaritmic spiral
 A logarithmic spiral is chosen as the main update mechanism of moths in this paper. However, any types of spiral can be applied
 here subject to the following conditions:
 
-    *Spiral’s initial point should start from the moth.
-    *Spiral’s final point should be the position of the flame.
-    *Fluctuation of the range of spiral should not exceed from the
-     search space.
+    **-Spiral’s initial point should start from the moth.**
+    
+    **-Spiral’s final point should be the position of the flame.**
+    
+    **-Fluctuation of the range of spiral should not exceed from the search space.**
 
 Considering these points, a logarithmic spiral is defined for the MFO algorithm as follows:
     
