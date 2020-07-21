@@ -260,7 +260,7 @@ class FitnessFunctions:
         score = (
             np.sum(list(
                         map(
-                            lambda x: abs(x[0]**x[1]), zip(value, range(1, len(value)+1))
+                            lambda x: abs(x[0]**x[1]), zip(value, range(2, len(value)+2))
                             )
                         )
                 )
