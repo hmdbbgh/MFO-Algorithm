@@ -156,6 +156,12 @@ class FitnessFunctions:
                 'dim': 2,
                 'lb': -5,
                 'ub': 5
+            },       
+
+            'zakharov': {
+                'dim': 0,
+                'lb': -5,
+                'ub': 10
             },              
         }
 
@@ -461,4 +467,25 @@ class FitnessFunctions:
             (value[1] ** 2)
         )
         
+        return score
+
+    
+    def zakharov(value):
+
+        score = (
+                np.sum(value ** 2) +\
+                ((np.sum(list(
+                            map(
+                                lambda x: (0.5 * x[0] * x[1]), zip(value, range(1, len(value)+1))
+                                )
+                            )
+                    )) ** 2) +\
+                ((np.sum(list(
+                            map(
+                                lambda x: (0.5 * x[0] * x[1]), zip(value, range(1, len(value)+1))
+                                )
+                            )
+                    )) ** 4)
+            )
+
         return score
