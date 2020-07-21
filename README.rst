@@ -61,7 +61,7 @@ Example
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.1.PNG
 
-Pic. 1 shows a conceptual model of transverse orientation. Since the moon is far away from the moth,
+A conceptual model of transverse orientation is shown in the above pic. Since the moon is far away from the moth,
 this mechanism guarantees flying in straight line. 
 
 The same navigation method can be done by humans. Suppose that the moon is in the south side of the sky and a human wants to go the east.
@@ -75,9 +75,9 @@ When moths see a human-made artificial light, they try to maintain a similar ang
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.2.PNG
 
 Since such a light is extremely close compared to the moon, however, maintaining a similar angle to the light source causes a
-useless or deadly spiral fly path for moths. A conceptual model of this behaviour is illustrated in Pic. 2.
-It may be observed in Pic. 2 that the moth eventually converges towards the light. This behaviour is modeled
-mathematically to propose an optimizer called Moth-Flame Optimization (MFO) algorithm in the following subsection.
+useless or deadly spiral fly path for moths. A conceptual model of this behaviour is illustrated in above pic.
+It may be observed that the moth eventually converges towards the light. This behaviour is modeled mathematically
+to propose an optimizer called Moth-Flame Optimization (MFO) algorithm in the following subsection.
 
 Explanation of MFO algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,7 +87,7 @@ the position of moths in the space. Therefore, the moths can fly in 1-D, 2-D, 3-
 changing their position vectors. 
 
 Since the MFO algorithm is a population-based algorithm, the set of moths is 
-represented in a matrix where n is the number of moths and d is the number of variables (dimension). For all the moths,
+represented in a matrix below where n is the number of moths and d is the number of variables (dimension). For all the moths,
 we also assume that there is an array for storing the corresponding fitness values where again n is the number of moths.
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.3.PNG
@@ -100,7 +100,7 @@ a flag (flame) and updates it in case of finding a better solution. With this me
 Initial values
 ~~~~~~~~~~~~~~
 
-!! We could use any random disturbion for generating initial solutions and calulating fitness values for each solution.
+Any random distribution can be used to generate initial solutions and calculate objective function values.
 This method is applied as default in which 'ub' is the upper bound and 'lb' is the lower bound for variable 'i'.
 Therefore for 'n' in dimension 'd' will be able to generate ininial solutions. We can calculate the fitness for each
 solution after initialization, thus the fitness function value of matrix 'M' will be 'OM'.
@@ -129,7 +129,7 @@ Considering these points, a logarithmic spiral is defined for the MFO algorithm 
     
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.5.PNG
 
-where 'D(i)' indicates the distance of the 'i-th' moth for the 'j-th' flame, 'b' is a constant for defining the shape of
+where 'D(i)' indicates the distance of the 'i-th' moth for the 'j-th' flame (which its formula is down below), 'b' is a constant for defining the shape of
 the logarithmic spiral, and 't' is a random number in [1, 1].
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.6.PNG
