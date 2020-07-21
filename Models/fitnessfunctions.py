@@ -158,11 +158,17 @@ class FitnessFunctions:
                 'ub': 5
             },       
 
+            'xinsheyangn3': {
+                'dim': 0,
+                'lb': -2 * np.pi,
+                'ub': 2 * np.pi
+            },              
+
             'zakharov': {
                 'dim': 0,
                 'lb': -5,
                 'ub': 10
-            },              
+            },  
         }
 
         details = args.get(name)
@@ -470,7 +476,22 @@ class FitnessFunctions:
         return score
 
     
-    def zakharov(value):
+    def xinsheyangn3(self, value):
+
+        beta, m = 15, 5
+
+        score = (
+            np.exp(-np.sum((value / beta) ** (2 * m))) +\
+            (
+                (-2 * np.exp(-np.sum(value ** 2))) *\
+                np.prod(np.cos(value) ** 2)
+            )
+        )
+
+        return score
+
+    
+    def zakharov(self, value):
 
         score = (
                 np.sum(value ** 2) +\
