@@ -90,6 +90,18 @@ class FitnessFunctions:
                 'dim': 0,
                 'lb': -1,
                 'ub': 1
+            },
+
+            'ridge': {
+                'dim': 0,
+                'lb': -5,
+                'ub': 5
+            }, 
+
+            'schaffern1': {
+                'dim': 2,
+                'lb': -100,
+                'ub': 100
             }, 
 
             'sphere': {
@@ -212,7 +224,7 @@ class FitnessFunctions:
 
 
     def exponential(self, value):
-    
+        import pdb ; pdb.set_trace()
         return -np.exp((-0.5) * (np.sum(value ** 2)))
 
     
@@ -267,6 +279,34 @@ class FitnessFunctions:
         )
 
         return score
+
+    
+    def ridge(self, value):
+
+        alpha, d = 0.5, 1
+        
+        return value[0] + ((d * (np.sum(value ** 2) - (value[0] ** 2))) ** alpha)
+
+    
+    def schaffern1(self, value):
+        
+        if len(value) == 2:
+
+            score = (
+                0.5 +\
+                (
+                    ((np.sin(value[0]**2 + value[1]**2)**2) - (0.5)) /\
+                    (((1) + (0.001*(value[0]**2 + value[1]**2)))**2)
+                )
+            )
+
+            return score
+
+        else:
+
+            sys.exit('The Schaffer N. 1 function is only defined on a 2D space.')
+
+        
     
 
     def sphere(self, value):
