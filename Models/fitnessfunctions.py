@@ -150,6 +150,12 @@ class FitnessFunctions:
                 'dim': 0,
                 'lb': -10,
                 'ub': 10
+            },    
+                      
+            'threehumpcamel': {
+                'dim': 2,
+                'lb': -5,
+                'ub': 5
             },              
         }
 
@@ -442,4 +448,17 @@ class FitnessFunctions:
                     )
             )
 
+        return score
+
+    
+    def threehumpcamel(self, value):
+    
+        score =  (
+            (2 * (value[0] ** 2)) -\
+            (1.05 * (value[0] ** 4)) +\
+            ((value[0] ** 6) / 6) +\
+            (value[0] * value[1]) +\
+            (value[1] ** 2)
+        )
+        
         return score
