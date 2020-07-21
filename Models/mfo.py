@@ -12,8 +12,10 @@ class MFO:
 
     def __init__(self,
                  max_iteration, number_of_moths, fitnessfunction,
-                 initialized_automatically = True, *args, **kwargs):
+                 initialized_automatically = True, dimension = 0, *args, **kwargs):
 
+        self.dimension = dimension
+        
         self.max_iteration = max_iteration
 
         self.number_of_moths = number_of_moths
@@ -30,6 +32,10 @@ class MFO:
         if not isinstance(self.fitnessfunction_name, str):
 
             sys.exit("fitnessfunction must be string")
+
+        if not isinstance(self.dimension, int):
+
+            sys.exit("dimension must be integer")
 
         if not isinstance(self.max_iteration, int):
 
@@ -49,9 +55,9 @@ class MFO:
         FitnessFunctions_object = FitnessFunctions()
 
         fitnessfunction_args, self.fitnessfunction = FitnessFunctions_object.get(self.fitnessfunction_name)
-
-        self.dimension = fitnessfunction_args['dim']
-
+        
+        self.dimension = fitnessfunction_args['dim'] if fitnessfunction_args['dim'] else self.dimension
+        
         self.lower_bound = fitnessfunction_args['lb']
 
         self.upper_bound = fitnessfunction_args['ub']
@@ -143,7 +149,7 @@ class MFO:
 
         if iteration == 1:
 
-                self.sort_the_first_fitness_of_moths()
+            self.sort_the_first_fitness_of_moths()
 
         else:
             
@@ -221,10 +227,11 @@ class MFO:
 
             self.update_the_position_of_moths(iteration)
 
-            print(['At iteration '+ str(iteration)+ ' the best fitness is '+ str(self.fitness_sorted[0])])
+            # print(['At iteration '+ str(iteration)+ ' the best fitness is '+ str(self.fitness_sorted[0])])
+            print(['At iteration '+ str(iteration)+ ' the best fitness is '+ str(self.sorted_population[0])])
 
             iteration += 1
 
 
-a = MFO(50,1000,'bohachevskyn1')
+a = MFO(50,100,dimension = 3,fitnessfunction='xinsheyangn3')
 a.start()
