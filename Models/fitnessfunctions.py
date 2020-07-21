@@ -141,7 +141,7 @@ class FitnessFunctions:
             }, 
 
             'sphere': {
-                'dim': 10,
+                'dim': 0,
                 'lb': -5.12,
                 'ub': 5.12
             },              
@@ -419,8 +419,6 @@ class FitnessFunctions:
     
         return np.sum(value ** 10)
 
-        
-    
 
     def sphere(self, value):
         
