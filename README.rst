@@ -61,7 +61,7 @@ Example
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.1.PNG
 
-A conceptual model of transverse orientation is shown in the above pic. Since the moon is far away from the moth,
+A conceptual model of transverse orientation is shown in the picture above. Since the moon is far away from the moth,
 this mechanism guarantees flying in straight line. 
 
 The same navigation method can be done by humans. Suppose that the moon is in the south side of the sky and a human wants to go the east.
@@ -75,7 +75,7 @@ When moths see a human-made artificial light, they try to maintain a similar ang
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.2.PNG
 
 Since such a light is extremely close compared to the moon, however, maintaining a similar angle to the light source causes a
-useless or deadly spiral fly path for moths. A conceptual model of this behaviour is illustrated in above pic.
+useless or deadly spiral fly path for moths. A conceptual model of this behaviour is illustrated in the picture above.
 It may be observed that the moth eventually converges towards the light. This behaviour is modeled mathematically
 to propose an optimizer called Moth-Flame Optimization (MFO) algorithm in the following subsection.
 
@@ -87,7 +87,7 @@ the position of moths in the space. Therefore, the moths can fly in 1-D, 2-D, 3-
 changing their position vectors. 
 
 Since the MFO algorithm is a population-based algorithm, the set of moths is 
-represented in a matrix below where n is the number of moths and d is the number of variables (dimension). For all the moths,
+represented in a matrix below, where n is the number of moths and d is the number of variables (dimension). For all the moths,
 we also assume that there is an array for storing the corresponding fitness values where again n is the number of moths.
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.3.PNG
@@ -110,7 +110,7 @@ solution after initialization, thus the fitness function value of matrix 'M' wil
 Algorithm iterations
 ~~~~~~~~~~~~~~~~~~~~
 
-After the initialization, the 'P' function will iteratively run until the 'T' function returns true. The P function is the main function
+After the initialization, the 'P' function will iteratively run until the 'T' function returns true. The 'P' function is the main function
 that moves the moths around the search space. As mentioned above the inspiration of this algorithm is the transverse orientation.
 
 Logaritmic spiral
@@ -134,24 +134,24 @@ the logarithmic spiral, and 't' is a random number in [1, 1].
 
 .. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.6.PNG
 
-Equation shown in Pic. 5 is where the spiral flying path of moths is simulated. As may be seen in this equation, the next position of a moth is
-defined with respect to a flame. The t parameter in the spiral equation defines how much the next position of the moth should be
+Logaritmic spiral equation is where the spiral flying path of moths is simulated. As may be seen in this equation, the next position of a moth is
+defined with respect to a flame. The 't' parameter in the spiral equation defines how much the next position of the moth should be
 close to the flame ('t' = '-1' is the closest position to the flame, while 't' = '1' shows the farthest). Therefore, a hyper ellipse
 can be assumed around the flame in all directions and the next position of the moth would be within this space.
-
-.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.7.PNG
 
 The spiral movement is the main component of the proposed method because it dictates how the moths update their positions around flames.
 The spiral equation allows a moth to fly "around" a flame and not necessarily in the space between them.
 Therefore, the exploration and exploitation of the search space can be guaranteed.
-The logarithmic spiral, space around the flame, and the position considering different t on the curve are illustrated in Pic. 7.
+The logarithmic spiral, space around the flame, and the position considering different 't' on the curve are illustrated in the picture below.
 
-.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.8.PNG
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.7.PNG
 
-Pic. 8 shows a conceptual model of position updating of a moth around a flame. Note that the vertical axis shows only one dimension
+A conceptual model of position updating of a moth around a flame is shown in the picture below. Note that the vertical axis shows only one dimension
 (1 variable/parameter of a given problem), but the method can be apllied for changing all the variables of the problem.
 The possible positions (dashed black lines) that can be chosen as the next position of the moth (blue horizontal line) around the flame 
 (green horizontal line) clearly show that a moth can explore and expliot the search space around the flame in one dimension.
+
+.. image:: https://github.com/hmdbbgh/MFO-Algorithm/blob/dev-README/Media/Pics/Pic.8.PNG
 
 Exploration happens when the next position is outside the space between the moth and flame as can be seen in the arrows labelled by 1, 3, and 4.
 Exploitation occurs when the next position is inside the space between the moth and flame as can be observed in the arrow labelled by 2.
