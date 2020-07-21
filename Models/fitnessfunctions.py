@@ -104,6 +104,18 @@ class FitnessFunctions:
                 'ub': 100
             }, 
 
+            'schaffern2': {
+                'dim': 2,
+                'lb': -100,
+                'ub': 100
+            }, 
+
+            'schaffern3': {
+                'dim': 2,
+                'lb': -100,
+                'ub': 100
+            }, 
+
             'sphere': {
                 'dim': 10,
                 'lb': -5.12,
@@ -295,8 +307,8 @@ class FitnessFunctions:
             score = (
                 0.5 +\
                 (
-                    ((np.sin(value[0]**2 + value[1]**2)**2) - (0.5)) /\
-                    (((1) + (0.001*(value[0]**2 + value[1]**2)))**2)
+                    ((np.sin(value[0] ** 2 + value[1] ** 2) ** 2) - (0.5)) /\
+                    (((1) + (0.001 * (value[0] ** 2 + value[1] ** 2))) ** 2)
                 )
             )
 
@@ -305,6 +317,63 @@ class FitnessFunctions:
         else:
 
             sys.exit('The Schaffer N. 1 function is only defined on a 2D space.')
+
+
+    def schaffern2(self, value):
+        
+        if len(value) == 2:
+
+            score = (
+                0.5 +\
+                (
+                    ((np.sin(value[0] ** 2 - value[1] ** 2)) - (0.5)) /\
+                    (((1) + (0.001 * (value[0] ** 2 + value[1] ** 2))) ** 2)
+                )
+            )
+
+            return score
+
+        else:
+
+            sys.exit('The Schaffer N. 2 function is only defined on a 2D space.')
+
+
+    def schaffern3(self, value):
+        
+        if len(value) == 2:
+
+            score = (
+                0.5 +\
+                (
+                    ((np.sin(np.cos(abs(value[0] ** 2 - value[1] ** 2))) ** 2) - (0.5)) /\
+                    (((1) + (0.001 * (value[0] ** 2 + value[1] ** 2))) ** 2)
+                )
+            )
+
+            return score
+
+        else:
+
+            sys.exit('The Schaffer N. 3 function is only defined on a 2D space.')
+
+
+    def schaffern4(self, value):
+        
+        if len(value) == 2:
+
+            score = (
+                0.5 +\
+                (
+                    ((np.cos(np.sin(abs(value[0] ** 2 - value[1] ** 2))) ** 2) - (0.5)) /\
+                    (((1) + (0.001 * (value[0] ** 2 + value[1] ** 2))) ** 2)
+                )
+            )
+
+            return score
+
+        else:
+
+            sys.exit('The Schaffer N. 4 function is only defined on a 2D space.')
 
         
     
