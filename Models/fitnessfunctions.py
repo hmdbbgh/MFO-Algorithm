@@ -86,6 +86,12 @@ class FitnessFunctions:
                 'ub': 10
             },
 
+            'powellsum': {
+                'dim': 0,
+                'lb': -1,
+                'ub': 1
+            }, 
+
             'sphere': {
                 'dim': 10,
                 'lb': -5.12,
@@ -247,6 +253,20 @@ class FitnessFunctions:
         else:
 
             sys.exit('The Matyas function is only defined on a 2D space.')
+
+    
+    def powellsum(self, value):
+
+        score = (
+            np.sum(list(
+                        map(
+                            lambda x: abs(x[0]**x[1]), zip(value, range(1, len(value)+1))
+                            )
+                        )
+                )
+        )
+
+        return score
     
 
     def sphere(self, value):
