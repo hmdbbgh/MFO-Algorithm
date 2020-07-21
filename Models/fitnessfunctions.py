@@ -116,6 +116,30 @@ class FitnessFunctions:
                 'ub': 100
             }, 
 
+            'schwefel2_20': {
+                'dim': 0,
+                'lb': -100,
+                'ub': 100
+            }, 
+
+            'schwefel2_21': {
+                'dim': 0,
+                'lb': -100,
+                'ub': 100
+            }, 
+
+            'schwefel2_22': {
+                'dim': 0,
+                'lb': -100,
+                'ub': 100
+            }, 
+
+            'schwefel2_23': {
+                'dim': 0,
+                'lb': -10,
+                'ub': 10
+            }, 
+
             'sphere': {
                 'dim': 10,
                 'lb': -5.12,
@@ -374,6 +398,26 @@ class FitnessFunctions:
         else:
 
             sys.exit('The Schaffer N. 4 function is only defined on a 2D space.')
+
+    
+    def schwefel2_20(self, value):
+    
+        return np.sum(abs(value))
+
+    
+    def schwefel2_21(self, value):
+    
+        return np.max(abs(value))
+
+    
+    def schwefel2_22(self, value):
+    
+        return np.sum(abs(value)) + np.prod(abs(value))
+
+    
+    def schwefel2_23(self, value):
+    
+        return np.sum(value ** 10)
 
         
     
