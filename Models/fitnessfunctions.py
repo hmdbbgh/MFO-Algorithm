@@ -116,6 +116,12 @@ class FitnessFunctions:
                 'ub': 100
             }, 
 
+            'schaffern4': {
+                'dim': 2,
+                'lb': -100,
+                'ub': 100
+            }, 
+
             'schwefel2_20': {
                 'dim': 0,
                 'lb': -100,
