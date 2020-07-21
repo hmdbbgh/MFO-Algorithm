@@ -176,6 +176,131 @@ class FitnessFunctions:
         
         return result
 
+    
+    def dropwave(self, value):
+    
+        if len(value) == 2:
+
+            score = -(
+                (1 + (np.cos(12 * np.sqrt(value[0] ** 2 + value[1] ** 2)))) /\
+                ((0.5 * (value[0] ** 2 + value[1] ** 2)) + 2)
+            )
+            
+            return score
+
+        else:
+
+            sys.exit('The Drop-Wave function is only defined on a 2D space.')
+
+    
+    def dropwave_args(self):
+
+        dimension, lower_bound, upper_bound = 2, -5.2, 5.2
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
+
+    def exponential(self, value):
+    
+        return -np.exp((-0.5) * (np.sum(value ** 2)))
+
+    
+    def exponential_args(self):
+
+        dimension, lower_bound, upper_bound = 0, -1, 1
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
+    
+    def griewank(self, value):
+
+        score = (
+            1 +\
+            ((1 / 4000) *\
+            np.sum(value)) +\
+            np.prod(list(
+                        map(
+                            lambda x: np.cos(x[0]/np.sqrt(x[1])), zip(value, range(1, len(value)+1))
+                            )
+                        )
+                    )
+        )
+
+        return score
+
+    
+    def griewank_args(self):
+
+        dimension, lower_bound, upper_bound = 0, -600, 600
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
+    
+    def leon(self, value):
+
+        if len(value) == 2:
+
+            return (100 * (value[1] - value[0] ** 3) ** 2) + ((1 - value[0]) ** 2)
+
+        else:
+
+            sys.exit('The Leon function is only defined on a 2D space.')
+    
+
+    def leon_args(self):
+
+        dimension, lower_bound, upper_bound = 2, 0, 10
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
+    
+    def matyas(self, value):
+
+        if len(value) == 2:
+
+            return (0.26 * (value[0] ** 2 + value[1] ** 2)) - (0.48 * value[0] * value[1])
+
+        else:
+
+            sys.exit('The Matyas function is only defined on a 2D space.')
+    
+        
+    def matyas_args(self):
+
+        dimension, lower_bound, upper_bound = 2, -10, 10
+
+        result = {
+            'dim': dimension,
+            'lb': lower_bound,
+            'ub': upper_bound
+        }
+        
+        return result
+
 
     def sphere(self, value):
         
