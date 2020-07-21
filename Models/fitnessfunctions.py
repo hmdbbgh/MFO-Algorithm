@@ -144,6 +144,12 @@ class FitnessFunctions:
                 'dim': 0,
                 'lb': -5.12,
                 'ub': 5.12
+            },   
+
+            'sumsquares': {
+                'dim': 0,
+                'lb': -10,
+                'ub': 10
             },              
         }
 
@@ -308,7 +314,7 @@ class FitnessFunctions:
         score = (
             np.sum(list(
                         map(
-                            lambda x: abs(x[0]**x[1]), zip(value, range(2, len(value)+2))
+                            lambda x: abs(x[0] ** x[1]), zip(value, range(2, len(value)+2))
                             )
                         )
                 )
@@ -422,4 +428,18 @@ class FitnessFunctions:
 
     def sphere(self, value):
         
-        return np.sum(value**2)
+        return np.sum(value ** 2)
+
+
+    def sumsquares(self, value):
+
+        score = (
+                np.sum(list(
+                            map(
+                                lambda x: ((x[0]**2) * x[1]), zip(value, range(1, len(value)+1))
+                                )
+                            )
+                    )
+            )
+
+        return score
