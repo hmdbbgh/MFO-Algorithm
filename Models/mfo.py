@@ -127,7 +127,7 @@ class MFO:
 
                 t = (a - 1) * random.random() + 1
 
-                if i <= number_of_flames: # Update the position of the moth with respect to its corresponsing flame
+                if i <= number_of_flames: # Update the position of the moth with respect to its corresponding flame
              
                     #Eq. (3.12)
                     self.position_of_moths[i,j] = (
@@ -137,7 +137,7 @@ class MFO:
                                                 self.sorted_population[i,j]
                                             )
                        
-                if i > number_of_flames: # Update the position of the moth with respct to one flame
+                if i > number_of_flames: # Update the position of the moth with respect to one flame
                     
                     #Eq. (3.12)
                     self.position_of_moths[i,j] = (
