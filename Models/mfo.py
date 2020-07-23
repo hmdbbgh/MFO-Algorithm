@@ -273,3 +273,5 @@ class MFO:
         # df = pd.DataFrame(self.report, index = range(1, self.max_iteration+1), columns = self.header)
 
         # print(df)
+
+        return self.header, self.report
