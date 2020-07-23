@@ -6,6 +6,20 @@ import numpy as np
 class FitnessFunctions:
 
 
+    def get_functions_name(self):
+
+        names = self.args('all')
+
+        return names
+
+
+    def get_n_dimension_functions_name(self):
+
+        names = self.args("n_dimension")
+
+        return names
+
+
     def get(self, name):
         
         try:
@@ -177,6 +191,14 @@ class FitnessFunctions:
             },  
         }
 
+        if name == 'all':
+
+            return list(args.keys())
+
+        if name == 'n_dimension':
+
+            return list(filter(lambda key: args[key]['dim'] == 0, args.keys()))
+
         details = args.get(name)
 
         if details:
@@ -290,7 +312,7 @@ class FitnessFunctions:
 
 
     def exponential(self, value):
-        import pdb ; pdb.set_trace()
+        
         return -np.exp((-0.5) * (np.sum(value ** 2)))
 
     
