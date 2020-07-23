@@ -4,7 +4,11 @@ import random
 
 import numpy as np
 
-from fitnessfunctions import FitnessFunctions
+import pandas as pd
+
+import matplotlib.pyplot as plot   
+
+from Models.fitnessfunctions import FitnessFunctions
 
 
 class MFO:
@@ -62,8 +66,6 @@ class MFO:
 
         self.upper_bound = fitnessfunction_args['ub']
 
-        # print(self.fitnessfunction(np.array([1,2,4,4])))
-
         if not isinstance(self.lower_bound, list):
 
             self.lower_bound = [self.lower_bound for i in range(self.dimension)]
@@ -72,28 +74,25 @@ class MFO:
 
             self.upper_bound = [self.upper_bound for i in range(self.dimension)]
 
-        # print(self.dimension, self.lower_bound, self.upper_bound)
-
     
     def determine_the_initial_position_of_the_moths(self):
 
         self.position_of_moths = np.zeros((self.number_of_moths, self.dimension))
 
-        # print(self.position_of_moths)
-
         for i in range(self.dimension):
 
-            self.position_of_moths[:,i] = np.random.uniform(0, 1, self.number_of_moths) *\
-                                     (self.upper_bound[i] - self.lower_bound[i]) + self.lower_bound[i]
+            self.position_of_moths[:,i] = (
+                                np.random.uniform(0, 1, self.number_of_moths) *\
+                                (self.upper_bound[i] - self.lower_bound[i]) +\
+                                self.lower_bound[i]
+                            )
 
-        print(self.position_of_moths)
+        self.initial_position_of_moths = self.position_of_moths
 
     
     def determine_the_initial_value_of_the_moths(self):
 
         self.fitness_of_moths = np.full(self.number_of_moths, float("inf"))
-
-        print(self.fitness_of_moths)
 
 
     def sort_the_first_fitness_of_moths(self):
@@ -131,18 +130,22 @@ class MFO:
                 if i <= number_of_flames: # Update the position of the moth with respect to its corresponsing flame
              
                     #Eq. (3.12)
-                    self.position_of_moths[i,j] = distance_to_flame *\
-                                                  np.exp(r * t) *\
-                                                  np.cos(t * 2 * np.pi) +\
-                                                  self.sorted_population[i,j]
+                    self.position_of_moths[i,j] = (
+                                                distance_to_flame *\
+                                                np.exp(r * t) *\
+                                                np.cos(t * 2 * np.pi) +\
+                                                self.sorted_population[i,j]
+                                            )
                        
                 if i > number_of_flames: # Update the position of the moth with respct to one flame
                     
                     #Eq. (3.12)
-                    self.position_of_moths[i,j] = distance_to_flame *\
-                                                  np.exp(r * t) *\
-                                                  np.cos(t*2*np.pi) +\
-                                                  self.sorted_population[number_of_flames,j]
+                    self.position_of_moths[i,j] = (
+                                                distance_to_flame *\
+                                                np.exp(r * t) *\
+                                                np.cos(t*2*np.pi) +\
+                                                self.sorted_population[number_of_flames,j]
+                                            )
 
     
     def update_the_fitness_of_flames(self, iteration, moths_family_sorted):
@@ -189,14 +192,16 @@ class MFO:
         
             for j in range(self.dimension):
 
-                self.position_of_moths[i,j] = np.clip(self.position_of_moths[i,j], self.lower_bound[j], self.upper_bound[j])
+                self.position_of_moths[i,j] = np.clip(
+                                            self.position_of_moths[i,j],
+                                            self.lower_bound[j],
+                                            self.upper_bound[j]
+                                        )
 
 
     def evaluate_the_moths(self):
 
         for i in range(self.number_of_moths): self.fitness_of_moths[i] = self.fitnessfunction(self.position_of_moths[i,:])
-
-        # print(self.fitness_of_moths)
 
     
     def start(self):
@@ -207,7 +212,11 @@ class MFO:
 
         self.determine_the_initial_value_of_the_moths()
 
+        self.convergence_curve = np.zeros(self.max_iteration)
+
         moths_family_sorted = np.zeros((2 * self.number_of_moths, self.dimension))
+
+        self.report = list()
 
         iteration = 1
 
@@ -227,11 +236,40 @@ class MFO:
 
             self.update_the_position_of_moths(iteration)
 
-            # print(['At iteration '+ str(iteration)+ ' the best fitness is '+ str(self.fitness_sorted[0])])
-            print(['At iteration '+ str(iteration)+ ' the best fitness is '+ str(self.sorted_population[0])])
+            self.convergence_curve[iteration - 1] = self.fitness_sorted[0]
+
+            temp = [self.fitness_sorted[0]]
+
+            for position in self.sorted_population[0]:
+
+                temp.append(position)
+            
+            self.report.append(temp)
 
             iteration += 1
 
+    def draw_the_plot(self, plot_file_path, plot_file_name):
 
-a = MFO(50,100,dimension = 3,fitnessfunction='xinsheyangn3')
-a.start()
+        # Data for plotting
+        plot.plot(np.arange(1, self.max_iteration + 1), self.convergence_curve)
+
+        plot.xlabel('Iteration') 
+
+        plot.ylabel('Cost') 
+
+        plot.title('Fitness Function Values in Iterations') 
+        
+        plot.savefig('{}/{}.png'.format(plot_file_path, plot_file_name))
+
+        # plot.show()
+
+    
+    def get_report(self):
+
+        self.header = ['Score',]
+
+        self.header.extend(range(self.dimension))
+
+        # df = pd.DataFrame(self.report, index = range(1, self.max_iteration+1), columns = self.header)
+
+        # print(df)
