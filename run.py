@@ -51,11 +51,11 @@ def main():
 
     clear()
 
-    mfo_object.get_report()
+    mfo_report_header, mfo_report = mfo_object.get_report()
 
     mfo_object.draw_the_plot(report_file_path, report_file_name)
 
-    write_the_report(mfo_object.report, mfo_object.header, max_iteration, report_file_path, report_file_name, initial_position_of_moths)
+    write_the_report(mfo_report_header, mfo_report, max_iteration, report_file_path, report_file_name, initial_position_of_moths)
 
     print('SUCCESSFUL!, Please check the Report Files\'s Outputs directory for the created files')
 
@@ -95,7 +95,7 @@ def get_report_file_name():
     return report_file_path, report_file_name
 
 
-def write_the_report(report, header, max_iteration, report_file_path, report_file_name, initial_position_of_moths):
+def write_the_report(header, report, max_iteration, report_file_path, report_file_name, initial_position_of_moths):
 
     file = open('{}/{}.txt'.format(report_file_path, report_file_name), 'w')
 
