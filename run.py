@@ -130,7 +130,9 @@ def write_the_report(
                                             )
     )
 
-    file.write('Moth\'s Position Dimension: {}-dimensional space\n\n\n'.format(fitness_function_dimension))
+    file.write('Moth\'s Position Dimension: {}-dimensional space\n\n'.format(fitness_function_dimension))
+
+    file.write('Number of Iteration: {}\n\n\n'.format(max_iteration))
 
     file.write('Initial Position of Moths\n')
 
