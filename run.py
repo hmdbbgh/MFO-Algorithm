@@ -53,7 +53,18 @@ def main():
 
     mfo_object.draw_the_plot(report_file_path, report_file_name)
 
-    write_the_report(mfo_report_header, mfo_report, max_iteration, report_file_path, report_file_name, initial_position_of_moths)
+    write_the_report(
+            mfo_report_header,
+            mfo_report,
+            max_iteration,
+            report_file_path,
+            report_file_name,
+            fitness_function_name,
+            mfo_object.dimension,
+            mfo_object.lower_bound[0],
+            mfo_object.upper_bound[0],
+            initial_position_of_moths
+        )
 
     print('SUCCESSFUL! Please check the "Report Files\'s Outputs" directory for the created files')
 
@@ -93,11 +104,35 @@ def get_report_file_name():
     return report_file_path, report_file_name
 
 
-def write_the_report(header, report, max_iteration, report_file_path, report_file_name, initial_position_of_moths):
+def write_the_report(
+        header,
+        report,
+        max_iteration,
+        report_file_path,
+        report_file_name,
+        fitness_function_name,
+        fitness_function_dimension,
+        fitness_function_lower_bound,
+        fitness_function_upper_bound,
+        initial_position_of_moths
+    ):
 
     file = open('{}/{}.txt'.format(report_file_path, report_file_name), 'w')
 
-    file.write('Initial Position of Moths:\n')
+    file.write('Moth-Flame Optimization Algorithm Report\n\n\n')
+
+    file.write('Fitness Function: {}\n\n'.format(fitness_function_name))
+
+    file.write(
+        'Moth\'s Position Domain: [{}, {}]\n\n'.format(
+                                                fitness_function_lower_bound,
+                                                fitness_function_upper_bound
+                                            )
+    )
+
+    file.write('Moth\'s Position Dimension: {}-dimensional space\n\n\n'.format(fitness_function_dimension))
+
+    file.write('Initial Position of Moths\n')
 
     file.write(
         tabulate(
@@ -105,7 +140,7 @@ def write_the_report(header, report, max_iteration, report_file_path, report_fil
         )
     )
 
-    file.write('\nBest moth\'s score and position in each iteration:\n')
+    file.write('\n\n\nBest moth\'s score and position in each iteration:\n')
     
     file.write(
         tabulate(
