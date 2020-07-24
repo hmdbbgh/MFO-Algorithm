@@ -123,7 +123,7 @@ class MFO:
                     self.sorted_population[i,j] - self.position_of_moths[i,j]
                 )  # D in Eq. (3.13)
 
-                r = 1
+                b = 1
 
                 t = (a - 1) * random.random() + 1
 
@@ -132,7 +132,7 @@ class MFO:
                     #Eq. (3.12)
                     self.position_of_moths[i,j] = (
                                                 distance_to_flame *\
-                                                np.exp(r * t) *\
+                                                np.exp(b * t) *\
                                                 np.cos(t * 2 * np.pi) +\
                                                 self.sorted_population[i,j]
                                             )
@@ -142,7 +142,7 @@ class MFO:
                     #Eq. (3.12)
                     self.position_of_moths[i,j] = (
                                                 distance_to_flame *\
-                                                np.exp(r * t) *\
+                                                np.exp(b * t) *\
                                                 np.cos(t*2*np.pi) +\
                                                 self.sorted_population[number_of_flames,j]
                                             )

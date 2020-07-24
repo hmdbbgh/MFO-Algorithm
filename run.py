@@ -1,5 +1,7 @@
 import os
 
+from os import system
+
 import sys
 
 from subprocess import call
@@ -57,13 +59,13 @@ def main():
 
     write_the_report(mfo_report_header, mfo_report, max_iteration, report_file_path, report_file_name, initial_position_of_moths)
 
-    print('SUCCESSFUL!, Please check the Report Files\'s Outputs directory for the created files')
+    print('SUCCESSFUL! Please check the "Report Files\'s Outputs" directory for the created files')
 
 
 def clear():
 
     # check and make call for specific operating system 
-    _ = call('clear' if os.name =='posix' else 'cls')
+    _ = system('clear') if os.name == 'posix' else system('cls') 
 
 
 def get_report_file_name():
