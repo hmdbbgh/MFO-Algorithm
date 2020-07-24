@@ -1,10 +1,6 @@
 import os
 
-from os import system
-
 import sys
-
-from subprocess import call
 
 from tabulate import tabulate
 
@@ -64,8 +60,8 @@ def main():
 
 def clear():
 
-    # check and make call for specific operating system 
-    _ = system('clear') if os.name == 'posix' else system('cls') 
+    # check os name and clear the screen
+    _ = os.system('clear') if os.name == 'posix' else os.system('cls') 
 
 
 def get_report_file_name():
