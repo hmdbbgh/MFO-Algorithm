@@ -1,5 +1,33 @@
-# Extra Folders
-.venv/
-.vscode/
+# Python
 __pycache__/
-Report Files's Outputs/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+.mypy_cache/
+.poetry/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and reports
+*.log
+reports/
+plots/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/

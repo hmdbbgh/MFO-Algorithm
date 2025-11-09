@@ -1,231 +1,126 @@
 import os
-
 import sys
+from typing import Tuple, List
 
+import typer
 from tabulate import tabulate
 
 from Models.mfo import MFO
-
 from Models.fitnessfunctions import FitnessFunctions
 
+app = typer.Typer(help="Moth-Flame Optimization (MFO) Algorithm CLI")
 
-# Main function
-def main():
-
-    FitnessFunctions_object = FitnessFunctions()
-
-    n_dimension = get_n_dimension_functions_name(FitnessFunctions_object)
-
-    fitness_function_name = get_function_name(FitnessFunctions_object)
-
-    max_iteration = get_max_iteration()
-
-    number_of_moths = get_number_of_moths()
-
-    if fitness_function_name in n_dimension :
-            
-                dimension = get_dimension()
-
-                mfo_object = MFO(
-                            max_iteration,
-                            number_of_moths,
-                            dimension = dimension,
-                            fitnessfunction = fitness_function_name
-                        )
-
-    else:
-
-        mfo_object = MFO(
-                    max_iteration,
-                    number_of_moths,
-                    fitnessfunction = fitness_function_name
-                )
-
-    report_file_path, report_file_name = get_report_file_name()
-
-    mfo_object.start()
-
-    initial_position_of_moths = mfo_object.initial_position_of_moths
-
-    clear()
-
-    mfo_report_header, mfo_report = mfo_object.get_report()
-
-    mfo_object.draw_the_plot(report_file_path, report_file_name)
-
-    write_the_report(
-            mfo_report_header,
-            mfo_report,
-            max_iteration,
-            report_file_path,
-            report_file_name,
-            fitness_function_name,
-            mfo_object.dimension,
-            mfo_object.lower_bound[0],
-            mfo_object.upper_bound[0],
-            initial_position_of_moths
-        )
-
-    print('SUCCESSFUL! Please check the "Report Files\'s Outputs" directory for the created files')
+REPORTS_DIR = os.path.join(os.getcwd(), "reports")
 
 
-def clear():
-
-    # check os name and clear the screen
-    _ = os.system('clear') if os.name == 'posix' else os.system('cls') 
-
-
-def get_report_file_name():
-
-    try:
-
-        current_directory = os.getcwd() + '/Report Files\'s Outputs'
-
-        filenames_in_current_directory = os.listdir(current_directory)
-    
-    except:
-
-        os.mkdir(os.getcwd() + '/Report Files\'s Outputs')
-
-        current_directory = os.getcwd() + '/Report Files\'s Outputs'
-
-        filenames_in_current_directory = os.listdir(current_directory)
-
-    report_file_name = input('Enter a name for report file: ')
-
-    while report_file_name in filenames_in_current_directory : 
-
-        report_file_name = input('This name is not available, Please enter another name: ')
-
-    report_file_path = '{}/{}'.format(current_directory, report_file_name)
-
-    os.mkdir(report_file_path)
-    
-    return report_file_path, report_file_name
+def _ensure_reports_dir() -> None:
+    """Ensure the reports directory exists."""
+    os.makedirs(REPORTS_DIR, exist_ok=True)
 
 
-def write_the_report(
-        header,
-        report,
-        max_iteration,
-        report_file_path,
-        report_file_name,
-        fitness_function_name,
-        fitness_function_dimension,
-        fitness_function_lower_bound,
-        fitness_function_upper_bound,
-        initial_position_of_moths
-    ):
-
-    file = open('{}/{}.txt'.format(report_file_path, report_file_name), 'w')
-
-    file.write('Moth-Flame Optimization Algorithm Report\n\n\n')
-
-    file.write('Fitness Function: {}\n\n'.format(fitness_function_name))
-
-    file.write(
-        'Moth\'s Position Domain: [{}, {}]\n\n'.format(
-                                                fitness_function_lower_bound,
-                                                fitness_function_upper_bound
-                                            )
-    )
-
-    file.write('Moth\'s Position Dimension: {}-dimensional space\n\n'.format(fitness_function_dimension))
-
-    file.write('Number of Iteration: {}\n\n\n'.format(max_iteration))
-
-    file.write('Initial Position of Moths\n')
-
-    file.write(
-        tabulate(
-            initial_position_of_moths
-        )
-    )
-
-    file.write('\n\n\nBest moth\'s score and position in each iteration:\n')
-    
-    file.write(
-        tabulate(
-            report,
-            headers = header,
-            tablefmt = "fancy_grid",
-            showindex = range(1, max_iteration + 1),
-            colalign = ("center",) * (len(header) + 1),
-        )
-    )
-
-    file.close()
+def _get_unique_report_path(report_name: str) -> str:
+    """Return a unique path for the report."""
+    path = os.path.join(REPORTS_DIR, report_name)
+    if os.path.exists(path):
+        typer.echo(f'Report "{report_name}" already exists!')
+        sys.exit(1)
+    os.makedirs(path)
+    return path
 
 
-def get_function_name(obj):
-
-    names = [(i+1, name) for i, name in enumerate(obj.get_functions_name())]
-
-    try:
-
-        choice = int(
-            input(' '.join(
-                        map(
-                            str,
-                            [str(name[0])+'-{}\n'.format(name[1]) for name in names]
-                        )
-                    ) +\
-                'Choose your fitness function iD: '
+def _write_report(
+    header: List[str],
+    report: List[List[float]],
+    max_iteration: int,
+    report_path: str,
+    report_name: str,
+    fitness_function_name: str,
+    dimension: int,
+    lb: float,
+    ub: float,
+    initial_positions,
+) -> None:
+    """Write the optimization report to a txt file."""
+    file_path = os.path.join(report_path, f"{report_name}.txt")
+    with open(file_path, "w") as f:
+        f.write("Moth-Flame Optimization Algorithm Report\n\n\n")
+        f.write(f"Fitness Function: {fitness_function_name}\n\n")
+        f.write(f"Moth's Position Domain: [{lb}, {ub}]\n\n")
+        f.write(f"Moth's Position Dimension: {dimension}-dimensional space\n\n")
+        f.write(f"Number of Iterations: {max_iteration}\n\n\n")
+        f.write("Initial Position of Moths\n")
+        f.write(tabulate(initial_positions))
+        f.write("\n\n\nBest moth's score and position in each iteration:\n")
+        f.write(
+            tabulate(
+                report,
+                headers=header,
+                tablefmt="fancy_grid",
+                showindex=range(1, max_iteration + 1),
+                colalign=("center",) * (len(header) + 1),
             )
         )
 
-        if not choice in range(1, len(names)+1) : sys.exit('Not valid iD.Please enter valid iD')
 
-        fitness_function_name = list(filter(lambda name: name[0] == choice, names))[0][1]
+@app.command()
+def run(
+    max_iteration: int = typer.Option(..., prompt=True, help="Max number of iterations"),
+    number_of_moths: int = typer.Option(..., prompt=True, help="Number of moths"),
+    fitness_function_id: int = typer.Option(..., prompt=True, help="ID of the fitness function"),
+    dimension: int = typer.Option(None, help="Dimension for n-dimension functions"),
+    report_name: str = typer.Option(..., prompt=True, help="Name for the report"),
+):
+    """
+    Run the Moth-Flame Optimization Algorithm.
+    """
+    _ensure_reports_dir()
+    report_path = _get_unique_report_path(report_name)
 
-        return fitness_function_name
+    ff_obj = FitnessFunctions()
+    all_functions = ff_obj.get_functions_name()
+    n_dimension_functions = ff_obj.get_n_dimension_functions_name()
 
-    except (ValueError, NameError, SyntaxError):               # raise error message if choice is not integer and exit
+    if not 1 <= fitness_function_id <= len(all_functions):
+        typer.echo("Invalid fitness function ID!")
+        sys.exit(1)
 
-        sys.exit('Not an integer! Please enter an integer.')
+    fitness_function_name = all_functions[fitness_function_id - 1]
 
+    # Initialize MFO
+    if fitness_function_name in n_dimension_functions and dimension is None:
+        typer.echo(f"Function {fitness_function_name} requires a dimension parameter!")
+        sys.exit(1)
 
-def get_n_dimension_functions_name(obj):
+    mfo_obj = MFO(
+        max_iteration=max_iteration,
+        number_of_moths=number_of_moths,
+        fitnessfunction=fitness_function_name,
+        dimension=dimension if dimension else 0,
+    )
 
-    return obj.get_n_dimension_functions_name()
+    # Run optimization
+    mfo_obj.start()
 
+    # Write report and plot
+    header, report = mfo_obj.get_report()
+    initial_positions = mfo_obj.initial_position_of_moths
 
-def get_max_iteration():
+    mfo_obj.draw_plot(report_path, report_name)
+    _write_report(
+        header=header,
+        report=report,
+        max_iteration=max_iteration,
+        report_path=report_path,
+        report_name=report_name,
+        fitness_function_name=fitness_function_name,
+        dimension=mfo_obj.dimension,
+        lb=mfo_obj.lower_bound[0],
+        ub=mfo_obj.upper_bound[0],
+        initial_positions=initial_positions,
+    )
 
-    try:
-
-        return int(input('Enter the Max iteration: '))
-
-    except (ValueError, NameError, SyntaxError):
-
-        sys.exit('Not an integer! Please enter an integer Max iteration.')
-
-
-def get_number_of_moths():
-
-    try:
-
-        return int(input('Enter the number of moths: '))
-
-    except (ValueError, NameError, SyntaxError):
-        
-        sys.exit('Not an integer! Please enter an integer number of Moths.')
-
-
-def get_dimension():
-
-    try:
-
-        dimension = int(input('Enter the dimension: '))
-
-        if dimension < 1: sys.exit("Sorry, no numbers below one")
-
-        return dimension
-
-    except (ValueError, NameError, SyntaxError):
-
-        sys.exit('Not an integer! Please enter an integer dimension.')
+    typer.echo(f"SUCCESS! Check '{report_path}' for outputs.")
 
 
-# Tell python to run main method
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    app()
